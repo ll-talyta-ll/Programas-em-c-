@@ -1,0 +1,36 @@
+//Talyta Scaramuzzo --- TIA: 32079915
+#include <stdio.h>
+int calc[100]
+int fibonnaci(int n)
+{
+	if (n < 1){
+    calc[n]=0;
+		return 0;
+	}
+	else if (n == 1){
+    calc[n]=1;
+		return 1;
+	}
+  else if (calc[n] !=-1)
+  {
+    return calc[n];
+  }
+	else  {
+    calc[n] = fibonacci(n-1)+fibonacci(n-2);
+		return calc[n];
+	}
+}
+
+int main()
+{
+  for(int i=0; i<100, i++)
+  {
+    calc[i] = -1;
+  }
+  int resultado = fibonacci(8);
+  printf("%d\n", resultado);
+  for (int i=0; i<100, i++)
+  {
+    printf("%d", calc[i]);
+  }
+}
