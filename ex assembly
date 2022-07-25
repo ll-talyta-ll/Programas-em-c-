@@ -1,0 +1,74 @@
+.data
+	myarray: .space 60
+	max: .word 0
+	min: .word 0 
+	prompt1: .asciiz"Insira seu vetor: "
+	maxMsg: .asciiz"\nMaximo: "
+	message: .asciiz"\nMenor elemento do vetor e: "
+.text
+	li $v0, 4
+	la $a0, prompt1
+	syscall
+	
+	li $t0, 0
+	li $s0, 0
+loop: 
+	li $v0, 5
+	syscall
+	sw $v0, myarray($t0)
+	addi $t0, $t0, 4
+	addi $s0, $s0, 1
+	blt $s0, 15, loop
+	
+	li $t0, 0
+	lw $s0, myarray($t0)
+	li $t1, 1
+	
+loop2: 
+	li $v0, 5
+	syscall
+	sw $v0, myarray($t0)
+	addi $t0, $t0, 4
+	addi $s0, $s0, 1
+	blt  $s0, 15, loop2
+	
+
+again:	beq $t1, 15, endloop
+	add $t0, $t0, 4
+	lw $s1, myarray($t0)
+	bge $s0, $s1, nochg
+	move $s0,$s1
+nochg:	add $t1, $t1, 1
+	j again
+endloop:
+	li $v0, 4
+	la $a0, maxMsg
+	syscall
+	
+	li $v0,1
+	move $a0, $s0
+	syscall
+	sw $s0, max
+	
+	li $t0, 0
+	lw $s0, myarray($t0)
+	li $t1, 1
+again2:	beq $t1, 15, endloop1
+	add $t0, $t0, 4
+	lw $s1, myarray($t0)
+	ble $s0, $s1, nochg2
+	move $s0,$s1
+nochg2:	add $t1, $t1, 1
+	j again2
+endloop1:
+	li $v0, 4
+	la $a0, message
+	syscall
+	
+	li $v0,1
+	move $a0, $s0
+	syscall
+	sw $s0, min
+
+
+
